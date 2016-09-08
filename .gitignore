@@ -8,6 +8,5 @@ nbproject
 .settings
 cache.properties
 build
-vendor/
-composer.phar
+#vendor/
 application/logs/
