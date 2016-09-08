@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => "$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT",
+	'hostname' => 'localhost',
 	'username' => 'adminmbPIh2e',
 	'password' => 'UJraUQKuPufK',
 	'database' => 'amt',
