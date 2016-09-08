@@ -63,6 +63,7 @@ $config['route']['GUEST'] = [
     'init' => 'welcome/index',
     'api/generate' => 'api/key/index',
     'staff/login' => 'staff/login/index',
+    'outlet/login' => 'outlet/login/index',
 ];
 
 $config['route']['OUTLET'] = [
