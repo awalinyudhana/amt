@@ -25,18 +25,18 @@ class OutletInsertModel extends CI_Model
                 'message' => 'data staff tidak ditemukan'
             ];
 
-        $this->building_repository = $this->db->get_where(
-            'building', array('building_id' => $this->input->post('building_id')))->row();
-
-        if($this->building_repository === null)
-            return [
-                'status' => false,
-                'message' => 'data building tidak ditemukan'
-            ];
+//        $this->building_repository = $this->db->get_where(
+//            'building', array('building_id' => $this->input->post('building_id')))->row();
+//
+//        if($this->building_repository === null)
+//            return [
+//                'status' => false,
+//                'message' => 'data building tidak ditemukan'
+//            ];
 
         $data = [
             'staff_id' => $this->input->post('staff_id'),
-            'building_id' => $this->input->post('building_id'),
+//            'building_id' => $this->input->post('building_id'),
             'username' => $this->input->post('username'),
             'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'name' => $this->input->post('name'),

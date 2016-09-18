@@ -22,7 +22,7 @@ class OutletDetailModel extends CI_Model
         $this->db
             ->select('*')
             ->from('outlet o')
-            ->join('building b', 'b.building_id = o.building_id', 'left')
+//            ->join('building b', 'b.building_id = o.building_id', 'left')
             ->join('staff s', 'staff_id = o.staff_id', 'left')
             ->where('o.outlet_id', $this->input->post('outlet_id'));
 

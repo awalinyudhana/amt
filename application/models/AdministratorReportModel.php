@@ -23,7 +23,7 @@ class AdministratorReportModel extends CI_Model
             ->select('*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
-            ->join('building b', 'b.building_id = o.building_id', 'left')
+//            ->join('building b', 'b.building_id = o.building_id', 'left')
             ->join('staff s', 'staff_id = i.staff_id', 'left')
             ->where('i.staff_id IS NULL', null, false)
             ->where('i.status', false);
@@ -53,7 +53,7 @@ class AdministratorReportModel extends CI_Model
             ->select('*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
-            ->join('building b', 'b.building_id = o.building_id', 'left')
+//            ->join('building b', 'b.building_id = o.building_id', 'left')
             ->join('staff s', 'staff_id = i.staff_id', 'left')
             ->where('i.staff_id IS NOT NULL', null, false)
             ->where('i.status', false);
