@@ -49,7 +49,7 @@ class AuthenticationMiddleware
                     ],REST_Controller::HTTP_BAD_REQUEST);
             }
 
-            $this->checkAudience($claims);
+//            $this->checkAudience($claims);
             $this->checkIssuer($claims);
             $this->checkTokenExpiration($claims);
 
