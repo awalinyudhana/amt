@@ -27,12 +27,11 @@ class StaffListsModel extends CI_Model
         $offset = $this->input->get('page') == null ? 0 : ($page - 1) * $limit;
 
         if ($this->input->get('key') !== null) {
-            if ($this->db->field_exists(strtolower($this->input->get('key')), 'staff')) {
+            if (!$this->db->field_exists(strtolower($this->input->get('key')), 'staff'))
                 return [
                     'status' => false,
                     'message' => 'parameter tidak cocok'
                 ];
-            }
 
             $key = $this->input->get('key');
             $value = $this->input->get('value');
