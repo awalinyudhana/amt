@@ -29,7 +29,7 @@ class StaffListsModel extends CI_Model
         $result = $this->db->list_fields('staff');
 
         if ($this->input->get('key') !== null) {
-            if (!in_array($this->input->get('key'), (array) $result)) {
+            if (!in_array(strtolower($this->input->get('key')), $result)) {
                 return [
                     'status' => false,
                     'message' => 'parameter tidak cocok'
@@ -40,7 +40,8 @@ class StaffListsModel extends CI_Model
             $value = $this->input->get('value');
         }
 
-        $num_rows = ceil($this->db->get('staff')->num_rows() / $limit);
+        $total_record = $this->db->get('staff')->num_rows();
+        $total_page = ceil($total_record / $limit);
 
         $this->db->from('staff');
 
@@ -59,8 +60,9 @@ class StaffListsModel extends CI_Model
             ];
 
         $pagination = [
-            'total_page' => $num_rows,
-            'page' => $offset,
+            'total_record' => $total_record,
+            'total_page' => $total_page,
+            'page' => $page,
             'per_page' => $limit
         ];
 
