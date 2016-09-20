@@ -45,11 +45,9 @@ class StaffListsModel extends CI_Model
             $this->db->where($key, $value);
         }
 
-        $query = $this->db->get();
+        $this->db->limit($limit, $offset);
 
-        $query->db->limit($limit, $offset);
-
-        $this->repository = $query->result();
+        $this->repository = $this->db->get()->result();
 
         if($this->repository === null)
             return [
