@@ -26,17 +26,13 @@ class StaffListsModel extends CI_Model
 
         $offset = $this->input->get('page') == null ? 0 : ($page - 1) * $limit;
 
-//        $list_fields = $this->db->list_fields('staff');
-
-//        var_dump($list_fields);
-
         if ($this->input->get('key') !== null) {
-//            if (! in_array(strtolower($this->input->get('key')), $list_fields)) {
-//                return [
-//                    'status' => false,
-//                    'message' => 'parameter tidak cocok'
-//                ];
-//            }
+            if ($this->db->field_exists(strtolower($this->input->get('key')), 'staff')) {
+                return [
+                    'status' => false,
+                    'message' => 'parameter tidak cocok'
+                ];
+            }
 
             $key = $this->input->get('key');
             $value = $this->input->get('value');
@@ -51,11 +47,11 @@ class StaffListsModel extends CI_Model
         $total_record = $this->db->get()->num_rows();
         $total_page = ceil($total_record / $limit);
 
-//        $this->db->from('staff');
-//
-//        if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
-//            $this->db->like($key, $value);
-//        }
+        $this->db->from('staff');
+
+        if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
+            $this->db->like($key, $value);
+        }
 
         $this->db->limit($limit, $offset);
 
