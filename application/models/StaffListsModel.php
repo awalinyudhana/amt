@@ -37,13 +37,15 @@ class StaffListsModel extends CI_Model
             $value = $this->input->get('value');
         }
 
-        $query = $this->db->get('staff');
+        $this->db->from('staff');
 
-        $num_rows = ceil($query->num_rows() / $limit);
+        $num_rows = ceil($this->db->get()->num_rows() / $limit);
 
         if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
-            $query->db->where($key, $value);
+            $this->db->where($key, $value);
         }
+
+        $query = $this->db->get();
 
         $query->db->limit($limit, $offset);
 
