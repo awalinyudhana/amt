@@ -42,14 +42,20 @@ class StaffListsModel extends CI_Model
             $value = $this->input->get('value');
         }
 
-        $total_record = $this->db->get('staff')->num_rows();
-        $total_page = ceil($total_record / $limit);
-
         $this->db->from('staff');
 
         if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
-            $this->db->where($key, $value);
+            $this->db->like($key, $value);
         }
+
+        $total_record = $this->db->get()->num_rows();
+        $total_page = ceil($total_record / $limit);
+
+//        $this->db->from('staff');
+//
+//        if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
+//            $this->db->like($key, $value);
+//        }
 
         $this->db->limit($limit, $offset);
 
