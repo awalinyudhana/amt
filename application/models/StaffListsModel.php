@@ -28,6 +28,8 @@ class StaffListsModel extends CI_Model
 
         $result = $this->db->list_fields('staff');
 
+        var_dump($result);
+
         if ($this->input->get('key') !== null) {
             if (!in_array(strtolower($this->input->get('key')), $result)) {
                 return [
