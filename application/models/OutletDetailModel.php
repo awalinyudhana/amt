@@ -24,7 +24,7 @@ class OutletDetailModel extends CI_Model
             ->from('outlet o')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
             ->join('staff s', 'staff_id = o.staff_id', 'left')
-            ->where('o.outlet_id', $this->input->post('outlet_id'));
+            ->where('o.outlet_id', $this->input->get('outlet_id'));
 
         $this->repository = $this->db->get()->row();
 

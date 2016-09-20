@@ -68,6 +68,9 @@ $config['route']['GUEST'] = [
 
 $config['route']['OUTLET'] = [
     'staff/detail' => 'staff/detail/index',
+    'outlet/update' => 'outlet/update/index',
+    'outlet/update-password' => 'staff/updatepasword/index',
+    'outlet/detail' => 'outlet/detail/index',
     'building/detail' => 'building/detail/index',
     'building/update' => 'staff/update/index',
     'issue/outlet/insert' => 'issue/insert/index',
@@ -79,6 +82,7 @@ $config['route']['OUTLET'] = [
 
 $config['route']['ENGINEER'] = [
     'staff/update' => 'staff/update/index',
+    'staff/update-password' => 'staff/updatepasword/index',
     'issue/engineer/pending' => 'issue/staffreport/pending',
     'issue/engineer/history' => 'issue/staffreport/history',
     'issue/engineer/done' => 'issue/done/index',
@@ -86,8 +90,12 @@ $config['route']['ENGINEER'] = [
 
 $config['route']['ADMINISTRATOR'] = [
     'staff/register' => 'staff/register/index',
+    'staff/delete' => 'staff/delete/index',
     'staff/list' => 'staff/lists/index',
     'staff/available' => 'staff/lists/available',
+    'outlet/insert' => 'outlet/insert/index',
+    'outlet/list' => 'outlet/lists/index',
+    'outlet/delete' => 'outlet/delete/index',
     'building/insert' => 'building/insert/index',
     'building/list' => 'building/lists/index',
     'issue/administrator/queue' => 'issue/administratorreport/queue',

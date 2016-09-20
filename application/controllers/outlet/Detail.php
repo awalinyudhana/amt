@@ -13,12 +13,12 @@ class Detail extends REST_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('StaffDetailModel', 'model');
+        $this->load->model('OutletDetailModel', 'model');
     }
 
     public function index_get()
     {
-        if(!$this->input->get('staff_id'))
+        if(!$this->input->get('outlet_id'))
             $this->set_response(
                 [
                     'status' => false,

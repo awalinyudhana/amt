@@ -3,22 +3,22 @@
 require_once APPPATH . '/libraries/REST_Controller.php';
 
 /**
- * Class Detail
+ * Class Delete
  */
-class Detail extends REST_Controller
+class Delete extends REST_Controller
 {
     /**
-     * Detail constructor.
+     * Delete constructor.
      */
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('StaffDetailModel', 'model');
+        $this->load->model('OutletDeleteModel', 'model');
     }
 
     public function index_get()
     {
-        if(!$this->input->get('staff_id'))
+        if(!$this->input->get('outlet_id'))
             $this->set_response(
                 [
                     'status' => false,
@@ -26,7 +26,7 @@ class Detail extends REST_Controller
                 ],
                 REST_Controller::HTTP_NO_CONTENT);
 
-        $handler = $this->model->detail();
+        $handler = $this->model->remove();
 
         if($handler['status'] !== true)
             $this->set_response($handler, REST_Controller::HTTP_CONFLICT);

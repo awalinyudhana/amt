@@ -3,17 +3,17 @@
 require_once APPPATH . '/libraries/REST_Controller.php';
 
 /**
- * Class Detail
+ * Class Delete
  */
-class Detail extends REST_Controller
+class Delete extends REST_Controller
 {
     /**
-     * Detail constructor.
+     * Delete constructor.
      */
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('StaffDetailModel', 'model');
+        $this->load->model('StaffDeleteModel', 'model');
     }
 
     public function index_get()

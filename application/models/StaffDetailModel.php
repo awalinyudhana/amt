@@ -19,7 +19,7 @@ class StaffDetailModel extends CI_Model
     public function detail()
     {
         $this->repository = $this->db->get_where(
-            'staff', array('staff_id' => $this->input->post('staff_id')))->row();
+            'staff', array('staff_id' => $this->input->get('staff_id')))->row();
 
         if($this->repository === null)
             return [
