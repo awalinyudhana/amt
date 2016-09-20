@@ -61,6 +61,7 @@ $route['translate_uri_dashes'] = TRUE;
 
 $config['route']['GUEST'] = [
     'init' => 'welcome/index',
+    'staff/list' => 'staff/lists/index',
     'api/generate' => 'api/key/index',
     'staff/login' => 'staff/login/index',
     'outlet/login' => 'outlet/login/index',
