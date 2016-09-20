@@ -21,7 +21,10 @@ class StaffListsModel extends CI_Model
     {
 
         $limit = $this->input->get('per_page') == null ? 15 : $this->input->get('per_page') ;
-        $offset = $this->input->get('page') == null ? 0 : $this->input->get('page') * $limit ;
+
+        $page = $this->input->get('page') == null ? 0 : $this->input->get('page') ;
+
+        $offset = $this->input->get('page') == null ? 0 : ($page - 1) * $limit;
 
         $result = $this->db->list_fields('staff');
 
