@@ -28,7 +28,7 @@ class StaffListsModel extends CI_Model
 
 //        $list_fields = $this->db->list_fields('staff');
 
-        var_dump($list_fields);
+//        var_dump($list_fields);
 
         if ($this->input->get('key') !== null) {
 //            if (! in_array(strtolower($this->input->get('key')), $list_fields)) {
