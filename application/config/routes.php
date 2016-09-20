@@ -61,7 +61,6 @@ $route['translate_uri_dashes'] = TRUE;
 
 $config['route']['GUEST'] = [
     'init' => 'welcome/index',
-    'staff/list' => 'staff/lists/index',
     'api/generate' => 'api/key/index',
     'staff/login' => 'staff/login/index',
     'outlet/login' => 'outlet/login/index',
@@ -87,7 +86,7 @@ $config['route']['ENGINEER'] = [
 
 $config['route']['ADMINISTRATOR'] = [
     'staff/register' => 'staff/register/index',
-//    'staff/list' => 'staff/lists/index',
+    'staff/list' => 'staff/lists/index',
     'staff/available' => 'staff/lists/available',
     'building/insert' => 'building/insert/index',
     'building/list' => 'building/lists/index',
