@@ -87,7 +87,7 @@ $config['route']['ENGINEER'] = [
 
 $config['route']['ADMINISTRATOR'] = [
     'staff/register' => 'staff/register/index',
-    'staff/list' => 'staff/lists/index',
+//    'staff/list' => 'staff/lists/index',
     'staff/available' => 'staff/lists/available',
     'building/insert' => 'building/insert/index',
     'building/list' => 'building/lists/index',
