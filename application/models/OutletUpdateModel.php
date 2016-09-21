@@ -14,7 +14,7 @@ class OutletUpdateModel extends CI_Model
         parent::__construct();
     }
 
-    public function save()
+    public function update()
     {
         $this->staff_repository = $this->db->get_where(
             'staff', array('staff_id' => $this->input->post('staff_id')))->row();

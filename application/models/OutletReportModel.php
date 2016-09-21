@@ -22,7 +22,7 @@ class OutletReportModel extends CI_Model
         $this->input->get('outlet_id');
 
         $this->db
-            ->select('*')
+            ->select('s.username as staff_username, s.date_registered as staff_date_registered, s.group as staff_group, s.name as staff_name, s.address as staff_address, s.city as staff_city, s.region as staff_region, s.note as staff_note, o.username as outlet_username, o.date_registered as outlet_date_registered, o.name as outlet_name, o.address as outlet_address, o.city as outlet_city, o.region as outlet_region, o.note as outlet_note, i.*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
@@ -53,7 +53,7 @@ class OutletReportModel extends CI_Model
         $this->input->get('outlet_id');
 
         $this->db
-            ->select('*')
+            ->select('s.username as staff_username, s.date_registered as staff_date_registered, s.group as staff_group, s.name as staff_name, s.address as staff_address, s.city as staff_city, s.region as staff_region, s.note as staff_note, o.username as outlet_username, o.date_registered as outlet_date_registered, o.name as outlet_name, o.address as outlet_address, o.city as outlet_city, o.region as outlet_region, o.note as outlet_note, i.*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')

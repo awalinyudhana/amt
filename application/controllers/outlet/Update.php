@@ -18,7 +18,7 @@ class Update extends REST_Controller
 
     public function index_post()
     {
-        $this->form_validation->set_rules('outlet', 'Outlet ID', 'trim|required|integer');
+        $this->form_validation->set_rules('outlet_id', 'Outlet ID', 'trim|required|integer');
 //        $this->form_validation->set_rules('building_id', 'Building ID', 'trim|required|integer');
         $this->form_validation->set_rules('staff_id', 'Staff ID', 'trim|required|integer');
         $this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_dash');

@@ -11,7 +11,7 @@ class StaffUpdateModel extends CI_Model
         parent::__construct();
     }
 
-    public function save()
+    public function update()
     {
 
         $this->repository = $this->db->get_where(
