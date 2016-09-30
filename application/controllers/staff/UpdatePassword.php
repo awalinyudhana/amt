@@ -24,7 +24,7 @@ class UpdatePassword extends REST_Controller
         $this->form_validation->set_rules(
             'password_confirmation',
             'New Password Confirmation',
-            'trim|required|matches[password]'
+            'trim|required|matches[new_password]'
         );
 
         if ($this->form_validation->run() == FALSE)

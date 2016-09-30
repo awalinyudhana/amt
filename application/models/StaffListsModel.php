@@ -37,24 +37,15 @@ class StaffListsModel extends CI_Model
             $value = $this->input->get('value');
         }
 
-        $this->db->from('staff');
+        $all_query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q limit $offset, $limit");
 
-        if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
-            $this->db->like($key, $value);
-        }
-
-        $total_record = $this->db->get()->num_rows();
+        $total_record = $all_query->num_rows();
         $total_page = ceil($total_record / $limit);
 
-        $this->db->from('staff');
+        $query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q limit $offset, $limit");
 
-        if ($this->input->get('key') !== null and $this->input->get('value') !== null) {
-            $this->db->like($key, $value);
-        }
 
-        $this->db->limit($limit, $offset);
-
-        $this->repository = $this->db->get()->result();
+        $this->repository = $query->result();
 
         if($this->repository === null)
             return [
@@ -88,7 +79,7 @@ class StaffListsModel extends CI_Model
             ->select('s.*')
             ->from('staff s')
             ->join('issue i', 'i.staff_id = s.staff_id', 'left')
-            ->where('i.status', false)
+            ->where('i.status', "open")
             ->where('i.staff_is IS NULL', null, false)
             ->
 

@@ -40,7 +40,7 @@ class Update extends REST_Controller
         $handler = $this->model->update();
 
         if($handler['status'] !== true)
-            $this->set_response($handler, REST_Controller::HTTP_CONFLICT);
+            $this->set_response($handler, REST_Controller::HTTP_OK);
         $this->set_response($handler, REST_Controller::HTTP_CREATED);
     }
 }

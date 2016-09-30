@@ -59,7 +59,7 @@ class OutletUpdateModel extends CI_Model
             ->where('outlet_id', $this->input->post('outlet_id'))
             ->update('outlet', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];

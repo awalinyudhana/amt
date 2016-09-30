@@ -26,7 +26,7 @@ class Delete extends REST_Controller
                 ],
                 REST_Controller::HTTP_NO_CONTENT);
 
-        $handler = $this->model->detail();
+        $handler = $this->model->delete();
 
         if($handler['status'] !== true)
             $this->set_response($handler, REST_Controller::HTTP_CONFLICT);

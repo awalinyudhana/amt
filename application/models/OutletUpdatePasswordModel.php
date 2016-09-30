@@ -14,7 +14,7 @@ class OutletUpdatePasswordModel extends CI_Model
         parent::__construct();
     }
 
-    public function save()
+    public function update()
     {
 
         $this->repository = $this->db->get_where(
@@ -33,14 +33,14 @@ class OutletUpdatePasswordModel extends CI_Model
             ];
 
         $data = [
-            'password' => $this->input->post('new_password')
+            'password' => password_hash($this->input->post('new_password'), PASSWORD_DEFAULT)
         ];
 
         $this->db
             ->where('outlet_id', $this->input->post('outlet_id'))
             ->update('outlet', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];

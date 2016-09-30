@@ -49,7 +49,7 @@ class OutletInsertModel extends CI_Model
 
         $this->db->insert('outlet', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];

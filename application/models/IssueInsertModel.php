@@ -66,7 +66,7 @@ class IssueInsertModel extends CI_Model
 
         $this->db->insert('issue', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];

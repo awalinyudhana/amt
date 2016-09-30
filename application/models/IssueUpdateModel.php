@@ -117,7 +117,7 @@ class IssueUpdateModel extends CI_Model
             ->where('issue_id', $this->input->post('issue_id'))
             ->update('issue', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];
