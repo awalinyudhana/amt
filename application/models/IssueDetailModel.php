@@ -24,8 +24,8 @@ class IssueDetailModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left')
-            ->where('o.issue_id', $this->input->post('issue_id'));
+            ->join('staff s', 's.staff_id = i.staff_id', 'left')
+            ->where('i.issue_id', $this->input->post('issue_id'));
 
         $this->repository = $this->db->get()->row();
 

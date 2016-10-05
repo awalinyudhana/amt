@@ -29,7 +29,7 @@ class IssueInsertModel extends CI_Model
             'issue',
             array(
                 'staff_id' => $this->outlet_repository->staff_id,
-                'status' => false
+                'status' => 'open'
             ))->result();
 
         $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
@@ -55,13 +55,14 @@ class IssueInsertModel extends CI_Model
             $filename = $this->upload->data()['file_name'];
         }
 
+        $status = $staff_id == null ? "pending" : "open";
         $data = [
             'staff_id' => $staff_id,
             'subject' => $this->input->post('subject'),
             'issue' => $this->input->post('issue'),
             'outlet_id' => $this->input->post('outlet_id'),
             'attachment' => $filename,
-            'status' => false,
+            'status' => $status,
         ];
 
         $this->db->insert('issue', $data);

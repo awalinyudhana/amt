@@ -73,7 +73,6 @@ class StaffListsModel extends CI_Model
      */
     public function available()
     {
-//        $this->input->get('outlet_id');
 
         $this->db
             ->select('s.*')

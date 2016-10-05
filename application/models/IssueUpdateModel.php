@@ -14,7 +14,7 @@ class IssueUpdateModel extends CI_Model
         parent::__construct();
     }
 
-    public function save()
+    public function update()
     {
 
         $this->repository = $this->db->get_where(
@@ -99,8 +99,8 @@ class IssueUpdateModel extends CI_Model
         $this->is_available_staff_repository = $this->db->get_where(
             'issue',
             array(
-                'staff_id' => $this->outlet_repository->staff_id,
-                'status' => false
+                'staff_id' => $this->staff_repository->staff_id,
+                'status' => 'open'
             ))->result();
 
         if ($this->is_available_staff_repository->num_rows() > 0)
