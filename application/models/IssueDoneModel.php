@@ -26,7 +26,7 @@ class IssueDoneModel extends CI_Model
                 'message' => 'data tidak ditemukan'
             ];
 
-        if($this->repository->status === true)
+        if($this->repository->status != 'progress')
             return [
                 'status' => false,
                 'message' => 'data tidak dapat diubah'
@@ -56,6 +56,7 @@ class IssueDoneModel extends CI_Model
         $data = [
             'date_checkout' => date('Y-m-d h:i:s'),
             'note' => $this->input->post('note'),
+            'status' => 'done',
             'attachment_checkout' => $filename
         ];
 
@@ -63,7 +64,7 @@ class IssueDoneModel extends CI_Model
             ->where('issue_id', $this->input->post('issue_id'))
             ->update('issue', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];

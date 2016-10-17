@@ -36,7 +36,7 @@ class BuildingUpdateModel extends CI_Model
             ->where('building_id', $this->input->post('building_id'))
             ->update('building', $data);
 
-        if ($this->db->affected_rows > 0)
+//        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true
             ];

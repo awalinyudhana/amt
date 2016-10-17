@@ -20,29 +20,32 @@ class StaffListsModel extends CI_Model
     public function index()
     {
 
-        $limit = $this->input->get('per_page') == null ? 15 : $this->input->get('per_page') ;
+        $limit = $this->input->get('per_page') == null ? 10 : $this->input->get('per_page') ;
 
         $page = $this->input->get('page') == null ? 0 : $this->input->get('page') ;
 
-        $offset = $this->input->get('page') == null ? 0 : ($page - 1) * $limit;
+        $offset = $this->input->get('page') == null ? 0 : ($page) * $limit;
 
-        if ($this->input->get('key') !== null) {
-            if (!$this->db->field_exists(strtolower($this->input->get('key')), 'staff'))
-                return [
-                    'status' => false,
-                    'message' => 'parameter tidak cocok'
-                ];
+        if ($this->input->get('name') !== null || $this->input->get('status') !== null) {
+            $query_where = "where";
 
-            $key = $this->input->get('key');
-            $value = $this->input->get('value');
+            $query_name = null ;
+            if ($this->input->get('name') !== null)
+                $query_name = " q.name like '%". $this->input->get('name') ."%'";
+
+            if($query_name !== null)
+                $query_where .= " and"." ".$query_name;
+
+            if ($this->input->get('status') !== null)
+                $query_where .= " q.status_available = '". $this->input->get('name') ."'";
         }
 
-        $all_query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q limit $offset, $limit");
+        $all_query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q $query_where");
 
         $total_record = $all_query->num_rows();
         $total_page = ceil($total_record / $limit);
 
-        $query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q limit $offset, $limit");
+        $query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q $query_where limit $offset, $limit");
 
 
         $this->repository = $query->result();

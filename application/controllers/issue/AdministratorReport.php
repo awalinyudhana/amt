@@ -16,6 +16,15 @@ class AdministratorReport extends REST_Controller
         $this->load->model('AdministratorReportModel', 'model');
     }
 
+    public function all_get()
+    {
+        $handler = $this->model->all();
+
+        if($handler['status'] !== true)
+            $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
+        $this->set_response($handler, REST_Controller::HTTP_OK);
+    }
+
     public function queue_get()
     {
         $handler = $this->model->queue();
@@ -28,6 +37,15 @@ class AdministratorReport extends REST_Controller
     public function pending_get()
     {
         $handler = $this->model->pending();
+
+        if($handler['status'] !== true)
+            $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
+        $this->set_response($handler, REST_Controller::HTTP_OK);
+    }
+
+    public function progress_get()
+    {
+        $handler = $this->model->progress();
 
         if($handler['status'] !== true)
             $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);

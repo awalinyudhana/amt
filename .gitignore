@@ -10,3 +10,5 @@ cache.properties
 build
 #vendor/
 application/logs/
+application/config/config.php
+application/config/database.php

@@ -85,6 +85,7 @@ $config['route']['ENGINEER'] = [
     'staff/update-password' => 'staff/updatepassword/index',
     'issue/engineer/pending' => 'issue/staffreport/pending',
     'issue/engineer/history' => 'issue/staffreport/history',
+    'issue/engineer/progress' => 'issue/progress/index',
     'issue/engineer/done' => 'issue/done/index',
 ];
 
@@ -98,8 +99,10 @@ $config['route']['ADMINISTRATOR'] = [
     'outlet/delete' => 'outlet/delete/index',
     'building/insert' => 'building/insert/index',
     'building/list' => 'building/lists/index',
+    'issue/administrator/all' => 'issue/administratorreport/all',
     'issue/administrator/queue' => 'issue/administratorreport/queue',
     'issue/administrator/pending' => 'issue/administratorreport/pending',
+    'issue/administrator/progress' => 'issue/administratorreport/progress',
     'issue/administrator/process' => 'issue/administratorreport/history',
     'issue/administrator/select-staff' => 'issue/update/staff',
 ];
