@@ -75,8 +75,11 @@ $config['route']['OUTLET'] = [
     'issue/outlet/insert' => 'issue/insert/index',
     'issue/outlet/update' => 'issue/update/index',
     'issue/outlet/detail' => 'issue/detail/index',
-    'issue/outlet/history' => 'issue/outletreport/history',
+    'issue/outlet/all' => 'issue/outletreport/all',
+    'issue/outlet/open' => 'issue/outletreport/open',
     'issue/outlet/pending' => 'issue/outletreport/pending',
+    'issue/outlet/progress' => 'issue/outletreport/progress',
+    'issue/outlet/history' => 'issue/outletreport/history',
 ];
 
 $config['route']['ENGINEER'] = [

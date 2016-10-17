@@ -24,9 +24,37 @@ class OutletReport extends REST_Controller
                 REST_Controller::HTTP_NO_CONTENT);
     }
 
+    public function all_get()
+    {
+        $handler = $this->model->all();
+
+        if($handler['status'] !== true)
+            $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
+        $this->set_response($handler, REST_Controller::HTTP_OK);
+    }
+
+
+    public function open_get()
+    {
+        $handler = $this->model->open();
+
+        if($handler['status'] !== true)
+            $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
+        $this->set_response($handler, REST_Controller::HTTP_OK);
+    }
+
     public function pending_get()
     {
         $handler = $this->model->pending();
+
+        if($handler['status'] !== true)
+            $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
+        $this->set_response($handler, REST_Controller::HTTP_OK);
+    }
+
+    public function progress_get()
+    {
+        $handler = $this->model->progress();
 
         if($handler['status'] !== true)
             $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);

@@ -67,7 +67,6 @@ class IssueInsertModel extends CI_Model
         $data = [
             'staff_id' => $staff_id,
             'subject' => $this->input->post('subject'),
-            'recurrence' => $this->input->post('recurrence') == null ? "once" : $this->input->post('recurrence'),
             'issue' => $this->input->post('issue'),
             'outlet_id' => $this->input->post('outlet_id'),
             'attachment' => implode(";", $uploadData),
