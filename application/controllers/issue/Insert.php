@@ -20,6 +20,7 @@ class Insert extends REST_Controller
         $this->form_validation->set_rules('outlet_id', 'Outlet ID', 'trim|required|integer');
         $this->form_validation->set_rules('subject', 'Subject', 'trim|required');
         $this->form_validation->set_rules('issue', 'Issue', 'trim|required');
+        $this->form_validation->set_rules('recurrence', 'Recurrence', 'trim|in_list[once,weekly,monthly]');
 
         if ($this->form_validation->run() == FALSE)
             $this->set_response(
