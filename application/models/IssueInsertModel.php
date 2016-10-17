@@ -57,7 +57,7 @@ class IssueInsertModel extends CI_Model
                 $this->upload->initialize($config);
                 if ($this->upload->do_upload('filename')) {
                     $fileData = $this->upload->data();
-                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+                    $uploadData[$i] = $fileData['file_name'];
                 }
             }
         }
