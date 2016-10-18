@@ -42,6 +42,16 @@ class IssueProgressModel extends CI_Model
             ->where('issue_id', $this->input->post('issue_id'))
             ->update('issue', $data);
 
+        $notif = [
+            'type' => 'checkin',
+            'id' => $this->input->post('issue_id'),
+            'status_outlet' => false,
+            'status_staff' => true,
+            'status_administrator' => false
+        ];
+
+        $this->db->insert('notification', $notif);
+
 //        if ($this->db->affected_rows() > 0)
             return [
                 'status' => true

@@ -80,6 +80,11 @@ $config['route']['OUTLET'] = [
     'issue/outlet/pending' => 'issue/outletreport/pending',
     'issue/outlet/progress' => 'issue/outletreport/progress',
     'issue/outlet/history' => 'issue/outletreport/history',
+    'notification/outlet/all' => 'notification/outlet/all',
+    'notification/outlet/pending' => 'notification/outlet/pending',
+    'notification/outlet/checkin' => 'notification/outlet/checkin',
+    'notification/outlet/checkout' => 'notification/outlet/checkout',
+    'notification/read/outlet' => 'notification/read/outlet',
 ];
 
 $config['route']['ENGINEER'] = [
@@ -90,6 +95,8 @@ $config['route']['ENGINEER'] = [
     'issue/engineer/history' => 'issue/staffreport/history',
     'issue/engineer/progress' => 'issue/progress/index',
     'issue/engineer/done' => 'issue/done/index',
+    'notification/staff/pending' => 'notification/staff/pending',
+    'notification/read/staff' => 'notification/read/staff',
 ];
 
 $config['route']['ADMINISTRATOR'] = [
@@ -108,6 +115,11 @@ $config['route']['ADMINISTRATOR'] = [
     'issue/administrator/progress' => 'issue/administratorreport/progress',
     'issue/administrator/process' => 'issue/administratorreport/history',
     'issue/administrator/select-staff' => 'issue/update/staff',
+    'notification/administrator/all' => 'notification/administrator/all',
+    'notification/administrator/pending' => 'notification/administrator/pending',
+    'notification/administrator/checkin' => 'notification/administrator/checkin',
+    'notification/administrator/checkout' => 'notification/administrator/checkout',
+    'notification/read/administrator' => 'notification/read/administrator',
 ];
 
 $route = array_merge(

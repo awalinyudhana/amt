@@ -63,7 +63,7 @@ class IssueInsertModel extends CI_Model
         }
 
 
-        $status = $staff_id == null ? "pending" : "open";
+        $status = $staff_id === null ? "pending" : "open";
         $data = [
             'staff_id' => $staff_id,
             'subject' => $this->input->post('subject'),
@@ -74,6 +74,18 @@ class IssueInsertModel extends CI_Model
         ];
 
         $this->db->insert('issue', $data);
+
+        if ($staff_id === null) {
+            $notif = [
+                'type' => 'pending',
+                'id' => $this->db->insert_id(),
+                'status_outlet' => false,
+                'status_staff' => false,
+                'status_administrator' => false
+            ];
+
+            $this->db->insert('notification', $notif);
+        }
 
 //        if ($this->db->affected_rows() > 0)
             return [
