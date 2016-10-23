@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Zend\\Permissions\\Acl\\' => array($vendorDir . '/zendframework/zend-permissions-acl/src'),
+    'RRule\\' => array($vendorDir . '/rlanvin/php-rrule/src'),
     'LivePos\\' => array($baseDir . '/application'),
 );

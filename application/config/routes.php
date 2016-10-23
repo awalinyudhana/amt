@@ -120,6 +120,8 @@ $config['route']['ADMINISTRATOR'] = [
     'notification/administrator/checkin' => 'notification/administrator/checkin',
     'notification/administrator/checkout' => 'notification/administrator/checkout',
     'notification/read/administrator' => 'notification/read/administrator',
+    'issue/administrator/recurrence/weekly' => 'issue/insert/recurrenceWeekly',
+    'issue/administrator/recurrence/monthly' => 'issue/insert/recurrenceMonthly'
 ];
 
 $route = array_merge(

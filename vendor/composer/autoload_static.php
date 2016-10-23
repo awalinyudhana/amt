@@ -11,6 +11,10 @@ class ComposerStaticInit34938b22fc73918a957cc6d6dc5130e1
         array (
             'Zend\\Permissions\\Acl\\' => 21,
         ),
+        'R' => 
+        array (
+            'RRule\\' => 6,
+        ),
         'L' => 
         array (
             'LivePos\\' => 8,
@@ -21,6 +25,10 @@ class ComposerStaticInit34938b22fc73918a957cc6d6dc5130e1
         'Zend\\Permissions\\Acl\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-permissions-acl/src',
+        ),
+        'RRule\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rlanvin/php-rrule/src',
         ),
         'LivePos\\' => 
         array (

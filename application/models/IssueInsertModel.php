@@ -38,24 +38,29 @@ class IssueInsertModel extends CI_Model
 
         if(!empty($_FILES['filename']['name'])) {
             $filesCount = count($_FILES['filename']['name']);
+            $files = $_FILES['filename'];
             for ($i = 0; $i < $filesCount; $i++) {
-                $_FILES['filename']['name'] = $_FILES['filename']['name'][$i];
-                $_FILES['filename']['type'] = $_FILES['filename']['type'][$i];
-                $_FILES['filename']['tmp_name'] = $_FILES['filename']['tmp_name'][$i];
-                $_FILES['filename']['error'] = $_FILES['filename']['error'][$i];
-                $_FILES['filename']['size'] = $_FILES['filename']['size'][$i];
+                $_FILES['filename']['name'] = $files['name'][$i];
+                $_FILES['filename']['type'] = $files['type'][$i];
+                $_FILES['filename']['tmp_name'] = $files['tmp_name'][$i];
+                $_FILES['filename']['error'] = $files['error'][$i];
+                $_FILES['filename']['size'] = $files['size'][$i];
 
-                $uploadPath = './uploads/issue';
-                $config['upload_path'] = $uploadPath;
-                $config['allowed_types'] = 'gif|jpg|png';
-                $config['max_size'] = '2048';
-                $config['max_width'] = '1024';
-                $config['max_height'] = '768';
-                $config['encrypt_name'] = true;
+                if (isset($_FILES['filename']['size']) && ($_FILES['filename']['size'] > 0)) {
+                    $uploadPath = './uploads/issue';
+                    $config['upload_path'] = $uploadPath;
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['max_size'] = '2048';
+                    $config['encrypt_name'] = true;
 
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                if ($this->upload->do_upload('filename')) {
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if ($this->upload->do_upload('filename') === false )
+                        return [
+                            'status' => false,
+                            'message' => $this->upload->display_errors()
+                        ];
+
                     $fileData = $this->upload->data();
                     $uploadData[$i] = $fileData['file_name'];
                 }
@@ -88,8 +93,200 @@ class IssueInsertModel extends CI_Model
         }
 
 //        if ($this->db->affected_rows() > 0)
+        return [
+            'status' => true
+        ];
+    }
+
+    public function recurrence_weekly()
+    {
+        $this->outlet_repository = $this->db->get_where(
+            'outlet', array('outlet_id' => $this->input->post('outlet_id')))->row();
+
+        if($this->outlet_repository === null)
             return [
-                'status' => true
+                'status' => false,
+                'message' => 'data outlet tidak ditemukan'
             ];
+
+        $this->is_available_staff_repository = $this->db->get_where(
+            'issue',
+            array(
+                'staff_id' => $this->outlet_repository->staff_id,
+                'status' => 'open'
+            ));
+
+        $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
+
+        $filename = null;
+
+        if(!empty($_FILES['filename']['name'])) {
+            $filesCount = count($_FILES['filename']['name']);
+            $files = $_FILES['filename'];
+            for ($i = 0; $i < $filesCount; $i++) {
+                $_FILES['filename']['name'] = $files['name'][$i];
+                $_FILES['filename']['type'] = $files['type'][$i];
+                $_FILES['filename']['tmp_name'] = $files['tmp_name'][$i];
+                $_FILES['filename']['error'] = $files['error'][$i];
+                $_FILES['filename']['size'] = $files['size'][$i];
+
+                if (isset($_FILES['filename']['size']) && ($_FILES['filename']['size'] > 0)) {
+                    $uploadPath = './uploads/issue';
+                    $config['upload_path'] = $uploadPath;
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['max_size'] = '2048';
+                    $config['encrypt_name'] = true;
+
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if ($this->upload->do_upload('filename') === false )
+                        return [
+                            'status' => false,
+                            'message' => $this->upload->display_errors()
+                        ];
+
+                    $fileData = $this->upload->data();
+                    $uploadData[$i] = $fileData['file_name'];
+                }
+            }
+        }
+
+        $status = $staff_id === null ? "pending" : "open";
+        $endDate = date('Y-m-d', strtotime("+".$this->input->post('interval')."month"));
+
+        $rrule = new \RRule\RRule([
+            'FREQ' => 'WEEKLY',
+            'BYDAY' => $this->input->post('day'),
+            'DTSTART' => date('Y-m-d'),
+            'UNTIL' => $endDate
+        ]);
+
+        foreach ( $rrule as $occurrence ) {
+            $data = [
+                'staff_id' => $staff_id,
+                'date_request' => $occurrence->format('Y-m-d h:i:s'),
+                'subject' => $this->input->post('subject'),
+                'issue' => $this->input->post('issue'),
+                'outlet_id' => $this->input->post('outlet_id'),
+                'attachment' => implode(";", $uploadData),
+                'status' => $status,
+            ];
+
+            $this->db->insert('issue', $data);
+
+            if ($staff_id === null) {
+                $notif = [
+                    'type' => 'pending',
+                    'id' => $this->db->insert_id(),
+                    'status_outlet' => false,
+                    'status_staff' => false,
+                    'status_administrator' => false
+                ];
+
+                $this->db->insert('notification', $notif);
+            }
+        }
+
+
+//        if ($this->db->affected_rows() > 0)
+        return [
+            'status' => true
+        ];
+    }
+
+    public function recurrence_monthly()
+    {
+        $this->outlet_repository = $this->db->get_where(
+            'outlet', array('outlet_id' => $this->input->post('outlet_id')))->row();
+
+        if($this->outlet_repository === null)
+            return [
+                'status' => false,
+                'message' => 'data outlet tidak ditemukan'
+            ];
+
+        $this->is_available_staff_repository = $this->db->get_where(
+            'issue',
+            array(
+                'staff_id' => $this->outlet_repository->staff_id,
+                'status' => 'open'
+            ));
+
+        $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
+
+        $filename = null;
+
+        if(!empty($_FILES['filename']['name'])) {
+            $filesCount = count($_FILES['filename']['name']);
+            $files = $_FILES['filename'];
+            for ($i = 0; $i < $filesCount; $i++) {
+                $_FILES['filename']['name'] = $files['name'][$i];
+                $_FILES['filename']['type'] = $files['type'][$i];
+                $_FILES['filename']['tmp_name'] = $files['tmp_name'][$i];
+                $_FILES['filename']['error'] = $files['error'][$i];
+                $_FILES['filename']['size'] = $files['size'][$i];
+
+                if (isset($_FILES['filename']['size']) && ($_FILES['filename']['size'] > 0)) {
+                    $uploadPath = './uploads/issue';
+                    $config['upload_path'] = $uploadPath;
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['max_size'] = '2048';
+                    $config['encrypt_name'] = true;
+
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if ($this->upload->do_upload('filename') === false )
+                        return [
+                            'status' => false,
+                            'message' => $this->upload->display_errors()
+                        ];
+
+                    $fileData = $this->upload->data();
+                    $uploadData[$i] = $fileData['file_name'];
+                }
+            }
+        }
+
+        $status = $staff_id === null ? "pending" : "open";
+        $endDate = date('Y-m-d', strtotime("+".$this->input->post('interval')."month"));
+
+        $rrule = new \RRule\RRule([
+            'FREQ' => 'MONTHLY',
+            'BYMONTHDAY' => $this->input->post('day'),
+            'DTSTART' => date('Y-m-d'),
+            'UNTIL' => $endDate
+        ]);
+
+        foreach ( $rrule as $occurrence ) {
+            $data = [
+                'staff_id' => $staff_id,
+                'date_request' => $occurrence->format('Y-m-d h:i:s'),
+                'subject' => $this->input->post('subject'),
+                'issue' => $this->input->post('issue'),
+                'outlet_id' => $this->input->post('outlet_id'),
+                'attachment' => implode(";", $uploadData),
+                'status' => $status,
+            ];
+
+            $this->db->insert('issue', $data);
+
+            if ($staff_id === null) {
+                $notif = [
+                    'type' => 'pending',
+                    'id' => $this->db->insert_id(),
+                    'status_outlet' => false,
+                    'status_staff' => false,
+                    'status_administrator' => false
+                ];
+
+                $this->db->insert('notification', $notif);
+            }
+        }
+
+
+//        if ($this->db->affected_rows() > 0)
+        return [
+            'status' => true
+        ];
     }
 }
