@@ -87,8 +87,8 @@ class StaffListsModel extends CI_Model
             ->select('s.*')
             ->from('staff s')
             ->join('issue i', 'i.staff_id = s.staff_id', 'left')
-            ->where('i.status', "open")
-            ->where('i.staff_id IS NULL', null, false);
+            ->where('i.staff_id IS NULL', null, false)
+            ->or_where('i.status', "done");
 
         $total_record = $this->db->get()->num_rows();
         $total_page = ceil($total_record / $limit);
@@ -97,8 +97,8 @@ class StaffListsModel extends CI_Model
             ->select('s.*')
             ->from('staff s')
             ->join('issue i', 'i.staff_id = s.staff_id', 'left')
-            ->where('i.status', "open")
             ->where('i.staff_id IS NULL', null, false)
+            ->or_where('i.status', "done")
             ->limit($limit, $offset);
 
         $this->repository = $this->db->get()->result();

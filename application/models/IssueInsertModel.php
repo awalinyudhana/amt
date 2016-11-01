@@ -109,14 +109,14 @@ class IssueInsertModel extends CI_Model
                 'message' => 'data outlet tidak ditemukan'
             ];
 
-        $this->is_available_staff_repository = $this->db->get_where(
-            'issue',
-            array(
-                'staff_id' => $this->outlet_repository->staff_id,
-                'status' => 'open'
-            ));
+//        $this->is_available_staff_repository = $this->db->get_where(
+//            'issue',
+//            array(
+//                'staff_id' => $this->outlet_repository->staff_id,
+//                'status' => 'open'
+//            ));
 
-        $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
+//        $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
 
         $filename = null;
 
@@ -151,7 +151,7 @@ class IssueInsertModel extends CI_Model
             }
         }
 
-        $status = $staff_id === null ? "pending" : "open";
+//        $status = $staff_id === null ? "pending" : "open";
         $endDate = date('Y-m-d', strtotime("+".$this->input->post('interval')."month"));
 
         $rrule = new \RRule\RRule([
@@ -163,18 +163,18 @@ class IssueInsertModel extends CI_Model
 
         foreach ( $rrule as $occurrence ) {
             $data = [
-                'staff_id' => $staff_id,
+//                'staff_id' => $staff_id,
                 'date_request' => $occurrence->format('Y-m-d h:i:s'),
                 'subject' => $this->input->post('subject'),
                 'issue' => $this->input->post('issue'),
                 'outlet_id' => $this->input->post('outlet_id'),
                 'attachment' => implode(";", $uploadData),
-                'status' => $status,
+                'status' => 'pending'
             ];
 
             $this->db->insert('issue', $data);
 
-            if ($staff_id === null) {
+//            if ($staff_id === null) {
                 $notif = [
                     'type' => 'pending',
                     'id' => $this->db->insert_id(),
@@ -184,7 +184,7 @@ class IssueInsertModel extends CI_Model
                 ];
 
                 $this->db->insert('notification', $notif);
-            }
+//            }
         }
 
 
@@ -205,14 +205,14 @@ class IssueInsertModel extends CI_Model
                 'message' => 'data outlet tidak ditemukan'
             ];
 
-        $this->is_available_staff_repository = $this->db->get_where(
-            'issue',
-            array(
-                'staff_id' => $this->outlet_repository->staff_id,
-                'status' => 'open'
-            ));
+//        $this->is_available_staff_repository = $this->db->get_where(
+//            'issue',
+//            array(
+//                'staff_id' => $this->outlet_repository->staff_id,
+//                'status' => 'open'
+//            ));
 
-        $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
+//        $staff_id = $this->is_available_staff_repository->num_rows() > 0 ? null : $this->outlet_repository->staff_id;
 
         $filename = null;
 
@@ -247,7 +247,7 @@ class IssueInsertModel extends CI_Model
             }
         }
 
-        $status = $staff_id === null ? "pending" : "open";
+//        $status = $staff_id === null ? "pending" : "open";
         $endDate = date('Y-m-d', strtotime("+".$this->input->post('interval')."month"));
 
         $rrule = new \RRule\RRule([
@@ -259,18 +259,18 @@ class IssueInsertModel extends CI_Model
 
         foreach ( $rrule as $occurrence ) {
             $data = [
-                'staff_id' => $staff_id,
+//                'staff_id' => $staff_id,
                 'date_request' => $occurrence->format('Y-m-d h:i:s'),
                 'subject' => $this->input->post('subject'),
                 'issue' => $this->input->post('issue'),
                 'outlet_id' => $this->input->post('outlet_id'),
                 'attachment' => implode(";", $uploadData),
-                'status' => $status,
+                'status' => 'pending',
             ];
 
             $this->db->insert('issue', $data);
 
-            if ($staff_id === null) {
+//            if ($staff_id === null) {
                 $notif = [
                     'type' => 'pending',
                     'id' => $this->db->insert_id(),
@@ -280,7 +280,7 @@ class IssueInsertModel extends CI_Model
                 ];
 
                 $this->db->insert('notification', $notif);
-            }
+//            }
         }
 
 
