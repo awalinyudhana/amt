@@ -76,6 +76,21 @@ class StaffListsModel extends CI_Model
      */
     public function available()
     {
+        $limit = $this->input->get('per_page') == null ? 10 : $this->input->get('per_page') ;
+
+        $page = $this->input->get('page') == null ? 0 : $this->input->get('page') ;
+
+        $offset = $this->input->get('page') == null ? 0 : ($page) * $limit;
+
+        $this->db
+            ->select('s.*')
+            ->from('staff s')
+            ->join('issue i', 'i.staff_id = s.staff_id', 'left')
+            ->where('i.status', "open")
+            ->where('i.staff_is IS NULL', null, false);
+
+        $total_record = $this->db->get()->num_rows();
+        $total_page = ceil($total_record / $limit);
 
         $this->db
             ->select('s.*')
@@ -83,7 +98,7 @@ class StaffListsModel extends CI_Model
             ->join('issue i', 'i.staff_id = s.staff_id', 'left')
             ->where('i.status', "open")
             ->where('i.staff_is IS NULL', null, false)
-            ->
+            ->limit($limit, $offset);
 
         $this->repository = $this->db->get()->result();
 
@@ -93,8 +108,16 @@ class StaffListsModel extends CI_Model
                 'message' => 'data tidak ditemukan'
             ];
 
+        $pagination = [
+            'total_record' => $total_record,
+            'total_page' => $total_page,
+            'page' => $page,
+            'per_page' => $limit
+        ];
+
         return [
             'status' => true,
+            'pagination' => $pagination,
             'data' => (array) $this->repository
         ];
     }
