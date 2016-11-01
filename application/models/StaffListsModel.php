@@ -26,6 +26,7 @@ class StaffListsModel extends CI_Model
 
         $offset = $this->input->get('page') == null ? 0 : ($page) * $limit;
 
+        $query_where = '';
         if ($this->input->get('name') !== null || $this->input->get('status') !== null) {
             $query_where = "where";
 
