@@ -104,6 +104,7 @@ $config['route']['ADMINISTRATOR'] = [
     'staff/delete' => 'staff/delete/index',
     'staff/list' => 'staff/lists/index',
     'staff/available' => 'staff/lists/available',
+    'staff/transaction/report' => 'issue/staffreport/transaction',
     'outlet/insert' => 'outlet/insert/index',
     'outlet/list' => 'outlet/lists/index',
     'outlet/delete' => 'outlet/delete/index',

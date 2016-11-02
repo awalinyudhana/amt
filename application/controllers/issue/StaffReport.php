@@ -41,4 +41,13 @@ class StaffReport extends REST_Controller
             $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
         $this->set_response($handler, REST_Controller::HTTP_OK);
     }
+
+    public function transaction()
+    {
+        $handler = $this->model->transaction();
+
+        if($handler['status'] !== true)
+            $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
+        $this->set_response($handler, REST_Controller::HTTP_OK);
+    }
 }
