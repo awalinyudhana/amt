@@ -68,7 +68,7 @@ $config['route']['GUEST'] = [
 
 $config['route']['OUTLET'] = [
     'outlet/update' => 'outlet/update/index',
-    'outlet/update-password' => 'outlet/updatepassword/index',
+    'outlet/update-password' => 'outlet/UpdatePassword/index',
     'outlet/detail' => 'outlet/detail/index',
     'building/detail' => 'building/detail/index',
     'building/update' => 'staff/update/index',
@@ -102,7 +102,7 @@ $config['route']['ENGINEER'] = [
 $config['route']['ADMINISTRATOR'] = [
     'staff/register' => 'staff/register/index',
     'staff/delete' => 'staff/delete/index',
-    'staff/list' => 'staff/lists/index',
+    'staff/list' => 'staff/Lists/index',
     'staff/available' => 'staff/lists/available',
     'staff/transaction/report' => 'issue/StaffReport/transaction',
     'outlet/insert' => 'outlet/insert/index',
