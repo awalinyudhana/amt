@@ -130,7 +130,8 @@ class StaffReportModel extends CI_Model
 
         $total_record = $all_query->num_rows();
         $total_page = ceil($total_record / $limit);
-        $query = $this->db->query("SELECT s.* FROM staff s $query_where limit $offset, $limit");
+
+        $query = $this->db->query("SELECT s.*, (SELECT COUNT( i.issue_id ) FROM issue i WHERE i.staff_id = s.staff_id AND i.status =  'done' $on_select_where) AS total_issue FROM staff s $query_where limit $offset, $limit");
 
         $this->repository = $query->result();
 

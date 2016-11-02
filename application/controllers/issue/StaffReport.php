@@ -46,6 +46,8 @@ class StaffReport extends REST_Controller
     {
         $handler = $this->model->transaction();
 
+        var_dump($handler);
+
         if($handler['status'] !== true)
             $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
         $this->set_response($handler, REST_Controller::HTTP_OK);
