@@ -29,7 +29,7 @@ class AdministratorReportModel extends CI_Model
             ->select('*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left');
+            ->join('staff s', 's.staff_id = i.staff_id', 'left');
 
         if ($this->input->get('status') !== null)
             $this->db->where('i.status', $this->input->get('status'));
@@ -47,7 +47,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NULL', null, false)
             ->limit($this->limit, $this->offset);
 
@@ -90,7 +90,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NULL', null, false)
             ->where('i.status', "open");
 
@@ -104,7 +104,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NULL', null, false)
             ->where('i.status', "open")
             ->limit($this->limit, $this->offset);
@@ -142,7 +142,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-//            ->join('staff s', 'staff_id = i.staff_id', 'left')
+//            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NOT NULL', null, false)
             ->where('i.status', "pending");
 
@@ -156,7 +156,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-//            ->join('staff s', 'staff_id = i.staff_id', 'left')
+//            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NOT NULL', null, false)
             ->where('i.status', "pending")
             ->limit($this->limit, $this->offset);
@@ -195,7 +195,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-//            ->join('staff s', 'staff_id = i.staff_id', 'left')
+//            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NOT NULL', null, false)
             ->where('i.status', "progress");
 
@@ -209,7 +209,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-//            ->join('staff s', 'staff_id = i.staff_id', 'left')
+//            ->join('staff s', 's.staff_id = i.staff_id', 'left')
 //            ->where('i.staff_id IS NOT NULL', null, false)
             ->where('i.status', "progress")
             ->limit($this->limit, $this->offset);
@@ -248,7 +248,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-//            ->join('staff s', 'staff_id = i.staff_id', 'left')
+//            ->join('staff s', 's.staff_id = i.staff_id', 'left')
             ->where('i.status', "done");
 
         $total_record = $this->db->get()->num_rows();
@@ -261,7 +261,7 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
 //            ->join('building b', 'b.building_id = o.building_id', 'left')
-//            ->join('staff s', 'staff_id = i.staff_id', 'left')
+//            ->join('staff s', 's.staff_id = i.staff_id', 'left')
             ->where('i.status', "done")
             ->limit($this->limit, $this->offset);
 
@@ -318,7 +318,7 @@ class AdministratorReportModel extends CI_Model
             ->select('*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->join('staff s', 's.staff_id = i.staff_id', 'left')
             ->where('i.status', 'done');
 
         if ($date_start !== null)
@@ -339,7 +339,7 @@ class AdministratorReportModel extends CI_Model
             ->select('*')
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
-            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->join('staff s', 's.staff_id = i.staff_id', 'left')
             ->where('i.status', 'done')
             ->limit($this->limit, $this->offset);
 
