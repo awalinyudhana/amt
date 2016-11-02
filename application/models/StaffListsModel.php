@@ -41,12 +41,12 @@ class StaffListsModel extends CI_Model
                 $query_where .= " q.status_available = '". $this->input->get('name') ."'";
         }
 
-        $all_query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q $query_where");
+        $all_query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and (i.status = 'open' or i.status = 'progress')) as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q $query_where");
 
         $total_record = $all_query->num_rows();
         $total_page = ceil($total_record / $limit);
 
-        $query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q $query_where limit $offset, $limit");
+        $query = $this->db->query("select q.* from ( select s.*, (select o.outlet_id from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and (i.status = 'open' or i.status = 'progress')) as outlet_id, (select o.name from issue i join outlet o on o.outlet_id = i.outlet_id where i.staff_id = s.staff_id and i.status = 'open') as outlet_name, if(( select count(*) from issue i where  i.staff_id = s.staff_id and i.status = 'open') > 0, 'on', 'off' ) as status_available from staff s ) as q $query_where limit $offset, $limit");
 
 
         $this->repository = $query->result();
