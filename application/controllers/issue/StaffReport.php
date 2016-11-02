@@ -14,18 +14,18 @@ class StaffReport extends REST_Controller
     {
         parent::__construct();
         $this->load->model('StaffReportModel', 'model');
+    }
 
+    public function pending_get()
+    {
         if(!$this->input->get('staff_id'))
             $this->set_response(
                 [
                     'status' => false,
                     'message' => "data tidak ditemukan."
                 ],
-                REST_Controller::HTTP_NO_CONTENT);
-    }
+                REST_Controller::HTTP_BAD_REQUEST);
 
-    public function pending_get()
-    {
         $handler = $this->model->pending();
 
         if($handler['status'] !== true)
@@ -35,6 +35,14 @@ class StaffReport extends REST_Controller
 
     public function history_get()
     {
+        if(!$this->input->get('staff_id'))
+            $this->set_response(
+                [
+                    'status' => false,
+                    'message' => "data tidak ditemukan."
+                ],
+                REST_Controller::HTTP_BAD_REQUEST);
+
         $handler = $this->model->history();
 
         if($handler['status'] !== true)
@@ -45,8 +53,6 @@ class StaffReport extends REST_Controller
     public function transaction_get()
     {
         $handler = $this->model->transaction();
-
-        var_dump($handler);
 
         if($handler['status'] !== true)
             $this->set_response($handler, REST_Controller::HTTP_NO_CONTENT);
