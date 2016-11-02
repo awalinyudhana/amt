@@ -42,7 +42,7 @@ class StaffReport extends REST_Controller
         $this->set_response($handler, REST_Controller::HTTP_OK);
     }
 
-    public function transaction()
+    public function transaction_get()
     {
         $handler = $this->model->transaction();
 
