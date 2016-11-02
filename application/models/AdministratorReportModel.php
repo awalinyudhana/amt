@@ -319,18 +319,21 @@ class AdministratorReportModel extends CI_Model
             ->from('issue i')
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
             ->join('staff s', 'staff_id = i.staff_id', 'left')
-            ->where('i.status', 'done')
-            ->where('i.date_checkout >=', $date_start)
-            ->where('i.date_checkout <=', $date_end);
+            ->where('i.status', 'done');
+
+        if ($date_start !== null)
+            $this->db
+                ->where('i.date_checkout >=', $date_start)
+                ->where('i.date_checkout <=', $date_end);
 
         if ($this->input->get('staff') !== null)
             $this->db->like('s.name', $this->input->get('name'), 'both');
 
         $total_record = $this->db->get()->num_rows();
+
         $total_page = ceil($total_record / $this->limit);
 
         $this->db->flush_cache();
-
 
         $this->db
             ->select('*')
@@ -338,9 +341,12 @@ class AdministratorReportModel extends CI_Model
             ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
             ->join('staff s', 'staff_id = i.staff_id', 'left')
             ->where('i.status', 'done')
-            ->where('i.date_checkout >=', $date_start)
-            ->where('i.date_checkout <=', $date_end)
             ->limit($this->limit, $this->offset);
+
+        if ($date_start !== null)
+            $this->db
+                ->where('i.date_checkout >=', $date_start)
+                ->where('i.date_checkout <=', $date_end);
 
         if ($this->input->get('staff') !== null)
             $this->db->like('s.name', $this->input->get('name'), 'both');
