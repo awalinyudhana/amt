@@ -101,7 +101,7 @@ class StaffReportModel extends CI_Model
             }
 
             $date_end = date('Y-m-d');
-        } else if($this->input->get('from') !== null and $this->input->get('subject') !== to) {
+        } else if($this->input->get('from') !== null and $this->input->get('to') !== null) {
             $date_start = $this->input->get('from');
             $date_end = $this->input->get('to');
         } else {
@@ -110,21 +110,12 @@ class StaffReportModel extends CI_Model
         }
 
         $on_select_where = '';
-        if ($date_start !== null) {
-            $on_select_where = "AND i.date_request >=  '$date_start' AND i.date_request <=  '$date_end'";
-        }
+        if ($date_start !== null)
+            $on_select_where = "AND i.date_checkout >=  '$date_start' AND i.date_checkout <= '$date_end'";
 
         $query_where = '';
-        if ($this->input->get('name') !== null) {
-            $query_where = "where";
-
-            $query_name = null ;
-            if ($this->input->get('name') !== null)
-                $query_name = " s.name like '%". $this->input->get('name') ."%'";
-
-            if($query_name !== null)
-                $query_where .= " and"." ".$query_name;
-        }
+        if ($this->input->get('name') !== null)
+            $query_where .= "where s.name like '%". $this->input->get('name') ."%'";
 
         $all_query = $this->db->query("SELECT * FROM staff s $query_where");
 

@@ -282,4 +282,75 @@ class OutletReportModel extends CI_Model
         ];
 
     }
+
+    public function transaction()
+    {
+        $limit = $this->input->get('per_page') == null ? 10 : $this->input->get('per_page') ;
+
+        $page = $this->input->get('page') == null ? 0 : $this->input->get('page') ;
+
+        $offset = $this->input->get('page') == null ? 0 : ($page) * $limit;
+
+        if($this->input->get('subject') !== null) {
+            switch($this->input->post('subject')) {
+                case 'week':
+                    $day = date('w');
+                    $date_start = date('Y-m-d', strtotime('+'.(1-$day).' days'));
+                    break;
+                case 'month':
+                    $date_start = date('Y-m-1');
+                    break;
+                case 'year':
+                    $date_start = date('Y-1-1');
+                    break;
+                default:
+                    $date_start = null;
+            }
+
+            $date_end = date('Y-m-d');
+        } else if($this->input->get('from') !== null and $this->input->get('to') !== null) {
+            $date_start = $this->input->get('from');
+            $date_end = $this->input->get('to');
+        } else {
+            $date_start = null;
+            $date_end = date('Y-m-d');
+        }
+
+        $on_select_where = '';
+        if ($date_start !== null)
+            $on_select_where = "AND i.date_request >=  '$date_start' AND i.date_request <= '$date_end'";
+
+        $query_where = '';
+        if ($this->input->get('name') !== null)
+            $query_where = "where o.name like '%". $this->input->get('name') ."%'";
+
+        $all_query = $this->db->query("SELECT * FROM outlet o $query_where");
+
+        $total_record = $all_query->num_rows();
+        $total_page = ceil($total_record / $limit);
+
+        $query = $this->db->query("SELECT o.*, (SELECT COUNT( i.issue_id ) FROM issue i WHERE i.outlet_id = o.outlet_id $on_select_where) AS total_issue FROM outlet o $query_where limit $offset, $limit");
+
+        $this->repository = $query->result();
+
+        if($this->repository === null)
+            return [
+                'status' => false,
+                'message' => 'data tidak ditemukan'
+            ];
+
+        $pagination = [
+            'total_record' => $total_record,
+            'total_page' => $total_page,
+            'page' => $page,
+            'per_page' => $limit
+        ];
+
+        return [
+            'status' => true,
+            'pagination' => $pagination,
+            'data' => (array) $this->repository
+        ];
+
+    }
 }

@@ -286,4 +286,85 @@ class AdministratorReportModel extends CI_Model
             'data' => (array) $this->repository
         ];
     }
+
+    public function transaction()
+    {
+        if($this->input->get('subject') !== null) {
+            switch($this->input->post('subject')) {
+                case 'week':
+                    $day = date('w');
+                    $date_start = date('Y-m-d', strtotime('+'.(1-$day).' days'));
+                    break;
+                case 'month':
+                    $date_start = date('Y-m-1');
+                    break;
+                case 'year':
+                    $date_start = date('Y-1-1');
+                    break;
+                default:
+                    $date_start = null;
+            }
+
+            $date_end = date('Y-m-d');
+        } else if($this->input->get('from') !== null and $this->input->get('to') !== null) {
+            $date_start = $this->input->get('from');
+            $date_end = $this->input->get('to');
+        } else {
+            $date_start = null;
+            $date_end = date('Y-m-d');
+        }
+
+        $this->db
+            ->select('*')
+            ->from('issue i')
+            ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
+            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->where('i.status', 'done')
+            ->where('i.date_checkout >=', $date_start)
+            ->where('i.date_checkout <=', $date_end);
+
+        if ($this->input->get('staff') !== null)
+            $this->db->like('s.name', $this->input->get('name'), 'both');
+
+        $total_record = $this->db->get()->num_rows();
+        $total_page = ceil($total_record / $this->limit);
+
+        $this->db->flush_cache();
+
+
+        $this->db
+            ->select('*')
+            ->from('issue i')
+            ->join('outlet o', 'o.outlet_id = i.outlet_id', 'left')
+            ->join('staff s', 'staff_id = i.staff_id', 'left')
+            ->where('i.status', 'done')
+            ->where('i.date_checkout >=', $date_start)
+            ->where('i.date_checkout <=', $date_end)
+            ->limit($this->limit, $this->offset);
+
+        if ($this->input->get('staff') !== null)
+            $this->db->like('s.name', $this->input->get('name'), 'both');
+
+        $this->repository = $this->db->get()->result();
+
+        if($this->repository === null)
+            return [
+                'status' => false,
+                'message' => 'data tidak ditemukan'
+            ];
+
+        $pagination = [
+            'total_record' => $total_record,
+            'total_page' => $total_page,
+            'page' => $this->page,
+            'per_page' => $this->limit
+        ];
+
+        return [
+            'status' => true,
+            'pagination' => $pagination,
+            'data' => (array) $this->repository
+        ];
+
+    }
 }

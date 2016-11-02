@@ -35,7 +35,7 @@ class StaffListsModel extends CI_Model
                 $query_name = " q.name like '%". $this->input->get('name') ."%'";
 
             if($query_name !== null)
-                $query_where .= " and"." ".$query_name;
+                $query_where .= $query_name . " and";
 
             if ($this->input->get('status') !== null)
                 $query_where .= " q.status_available = '". $this->input->get('name') ."'";
