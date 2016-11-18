@@ -19,6 +19,8 @@ class Done extends REST_Controller
     public function index_post()
     {
         $this->form_validation->set_rules('issue_id', 'Issue ID', 'trim|required|integer');
+        $this->form_validation->set_rules('latitude', 'Latitude');
+        $this->form_validation->set_rules('longitude', 'longitude');
         $this->form_validation->set_rules('note', 'Issue', 'trim|required');
 
         if ($this->form_validation->run() == FALSE)
